@@ -1,77 +1,78 @@
-<<<<<<< HEAD
-# Face-recognition-CNN
-=======
-💻 Dự án Nhận Diện Khuôn Mặt bằng CNN, FaceNet và OpenCV (LBPH)
-🧠 Giới thiệu
-Dự án này xây dựng một hệ thống nhận diện khuôn mặt bằng 3 phương pháp chính:
+Face-recognition-CNN
 
-CNN (mạng nơ-ron tích chập) huấn luyện từ đầu
+💻 プロジェクト概要：CNN、FaceNet、OpenCV(LBPH)を用いた顔認識システム
 
-FaceNet: tạo vector đặc trưng khuôn mặt (embedding) rồi so sánh khoảng cách
+🧠 紹介
+本プロジェクトでは、以下の3つの主要手法を用いて顔認識システムを構築しています：
 
-OpenCV LBPH: phương pháp truyền thống sử dụng histogram của các điểm ảnh nhị phân
+CNN（畳み込みニューラルネットワーク）：スクラッチから学習
 
-Hệ thống có thể nhận diện người từ:
+FaceNet：顔の特徴ベクトル（embedding）を作成し、距離を比較
 
-Video có sẵn
+OpenCV LBPH：従来手法で、二値化された画像のヒストグラムを使用
 
-Nguồn webcam trực tiếp
+システムは以下の入力から人物を認識可能です：
 
-📁 Cấu trúc thư mục
+保存された動画
 
+ライブウェブカメラ映像
+
+📁 ディレクトリ構成
 
 ├── data/
-│   ├── train/            # Video gốc huấn luyện theo từng người
-│   └── video/            # Các video khác để kiểm tra
+│   ├── train/            # 学習用の元動画（人物ごとにフォルダ分け）
+│   └── video/            # テスト用動画
 │
 ├── dataset/
-│   ├── train/            # Ảnh khuôn mặt trích xuất từ video (tập huấn luyện)
-│   └── val/              # Tập kiểm tra (validation)
+│   ├── train/            # 動画から抽出した顔画像（学習用）
+│   └── val/              # 検証用データ
 │
 ├── notebook/
-│   ├── face_recognition_face_net.ipynb     # Nhận diện bằng FaceNet
-│   ├── face_regconition_cnn.ipynb          # Huấn luyện & nhận diện bằng CNN
-│   └── face_regconition_LBPH.ipynb         # Nhận diện bằng OpenCV LBPH
+│   ├── face_recognition_face_net.ipynb     # FaceNetによる顔認識
+│   ├── face_recognition_cnn.ipynb          # CNNによる学習・認識
+│   └── face_recognition_LBPH.ipynb         # OpenCV LBPHによる認識
 │
 ├── output/
 │   ├── output_facenet.mp4
 │   ├── output_video_cnn.mp4
-│   └── webcam.mp4         # Video kết quả sau khi nhận diện
+│   └── webcam.mp4         # 認識結果を含む出力動画
 │
-├── face_cnn_model.keras    # Mô hình CNN đã huấn luyện
-├── haarcascade_frontalface_default.xml     # Mô hình phát hiện mặt của OpenCV
-├── label_map.pkl           # File ánh xạ label và tên người
-├── trainer.yml             # Cấu hình huấn luyện LBPH (nếu dùng)
-├── Trump_test.mp4          # Video đầu vào test
-├── README.md               # File mô tả này
-⚙️ Cách hoạt động
-Trích xuất dữ liệu
+├── face_cnn_model.keras                # 学習済みCNNモデル
+├── haarcascade_frontalface_default.xml # OpenCV顔検出モデル
+├── label_map.pkl                        # ラベルと名前のマッピングファイル
+├── trainer.yml                           # LBPH学習設定（使用する場合）
+├── Trump_test.mp4                        # テスト用入力動画
+├── README.md                             # 本README
 
-Đặt video vào thư mục data/train/, mỗi người một thư mục riêng.
 
-Tự động trích xuất ảnh khuôn mặt lưu vào dataset/train/ và dataset/val/.
+⚙️ システムの動作手順
 
-Huấn luyện mô hình
+1. データ抽出
 
-CNN: huấn luyện mô hình phân loại khuôn mặt.
+data/train/ に動画を配置（人物ごとにフォルダを分ける）
 
-FaceNet: dùng mô hình đã huấn luyện sẵn để tạo vector embedding rồi tính khoảng cách cosine hoặc Euclidean.
+自動で顔画像を抽出し、dataset/train/ と dataset/val/ に保存
 
-LBPH: dùng OpenCV để huấn luyện dựa trên histogram ảnh mặt.
+2. モデル学習
 
-Nhận diện
+CNN：顔分類モデルを学習
 
-Thực hiện trên webcam hoặc video có sẵn.
+FaceNet：事前学習済みモデルを使用し、embeddingベクトルを生成し、コサイン距離またはユークリッド距離で比較
 
-Ghi lại video có gắn nhãn nhận diện và lưu vào output/.
+LBPH：OpenCVで顔画像のヒストグラムを用いて学習
 
-🧩 Thư viện cần thiết
-Cài đặt qua pip:
+3. 顔認識
 
-bash
-Sao chép mã
+ウェブカメラまたは既存動画で実行
+
+認識結果付き動画を output/ に保存
+
+🧩 必要ライブラリ
+
 pip install -r requirements.txt
-Các thư viện chính sử dụng:
+
+
+主なライブラリ
 
 opencv-python
 
@@ -81,25 +82,20 @@ tensorflow, keras
 
 scikit-learn
 
-mtcnn hoặc dlib
+mtcnn または dlib
 
-pickle (lưu label map)
+pickle（label map保存用）
 
-📌 Hướng dẫn sử dụng notebook
-face_recognition_face_net.ipynb: Nhận diện bằng mô hình FaceNet.
+📌 ノートブック使用方法
 
-face_regconition_cnn.ipynb: Huấn luyện và test bằng CNN.
+face_recognition_face_net.ipynb：FaceNetモデルによる認識
 
-face_regconition_LBPH.ipynb: Dùng OpenCV LBPH nhận diện.
+face_recognition_cnn.ipynb：CNNによる学習とテスト
 
-⚠️ Đảm bảo bạn đã chuẩn bị xong thư mục dataset/ và file label_map.pkl đúng định dạng.
+face_recognition_LBPH.ipynb：OpenCV LBPHによる認識
 
-📽️ Kết quả đầu ra
-Sau khi chạy, kết quả sẽ được lưu trong thư mục output/:
+⚠️ dataset/ フォルダと label_map.pkl が正しい形式で準備されていることを確認してください。
 
-output_facenet.mp4: kết quả nhận diện bằng FaceNet
+📽️ 出力結果
 
-output_video_cnn.mp4: kết quả nhận diện bằng CNN
-
-webcam.mp4: nhận diện trực tiếp từ webcam
->>>>>>> efe2ea0 (🎉 Initial clean commit)
+実行後、出力結果は output/ フォルダに保存されます
