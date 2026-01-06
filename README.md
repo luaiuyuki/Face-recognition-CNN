@@ -1,101 +1,85 @@
-Face-recognition-CNN
+# Face-recognition-CNN
 
-💻 プロジェクト概要：CNN、FaceNet、OpenCV(LBPH)を用いた顔認識システム
+💻 **Project Overview:** Face recognition system using CNN, FaceNet, and OpenCV (LBPH)
 
-🧠 紹介
-本プロジェクトでは、以下の3つの主要手法を用いて顔認識システムを構築しています：
+---
 
-CNN（畳み込みニューラルネットワーク）：スクラッチから学習
+## 🧠 Introduction
 
-FaceNet：顔の特徴ベクトル（embedding）を作成し、距離を比較
+This project implements a face recognition system using three main methods:
 
-OpenCV LBPH：従来手法で、二値化された画像のヒストグラムを使用
+1. **CNN (Convolutional Neural Network):** trained from scratch.  
+2. **FaceNet:** creates face embeddings and compares distances.  
+3. **OpenCV LBPH:** traditional method using histograms of binary images.
 
-システムは以下の入力から人物を認識可能です：
+The system can recognize people from:
 
-保存された動画
+- Saved video files  
+- Live webcam feed
 
-ライブウェブカメラ映像
+---
 
-📁 ディレクトリ構成
+## 📁 Project Structure
+
 ```text
 ├── data/
-│   ├── train/            # 学習用の元動画（人物ごとにフォルダ分け）
-│   └── video/            # テスト用動画
+│   ├── train/            # Original videos for training (folders per person)
+│   └── video/            # Test videos
 │
 ├── dataset/
-│   ├── train/            # 動画から抽出した顔画像（学習用）
-│   └── val/              # 検証用データ
+│   ├── train/            # Face images extracted from videos (training)
+│   └── val/              # Validation data
 │
 ├── notebook/
-│   ├── face_recognition_face_net.ipynb     # FaceNetによる顔認識
-│   ├── face_recognition_cnn.ipynb          # CNNによる学習・認識
-│   └── face_recognition_LBPH.ipynb         # OpenCV LBPHによる認識
+│   ├── face_recognition_face_net.ipynb     # FaceNet recognition
+│   ├── face_recognition_cnn.ipynb          # CNN training & recognition
+│   └── face_recognition_LBPH.ipynb         # OpenCV LBPH recognition
 │
 ├── output/
 │   ├── output_facenet.mp4
 │   ├── output_video_cnn.mp4
-│   └── webcam.mp4         # 認識結果を含む出力動画
+│   └── webcam.mp4         # Output video with recognition
 │
-├── face_cnn_model.keras                # 学習済みCNNモデル
-├── haarcascade_frontalface_default.xml # OpenCV顔検出モデル
-├── label_map.pkl                        # ラベルと名前のマッピングファイル
-├── trainer.yml                           # LBPH学習設定（使用する場合）
-├── Trump_test.mp4                        # テスト用入力動画
-├── README.md                             # 本README
+├── face_cnn_model.keras                # Trained CNN model
+├── haarcascade_frontalface_default.xml # OpenCV face detection model
+├── label_map.pkl                        # Mapping file between IDs and names
+├── trainer.yml                           # LBPH training config (if used)
+├── Trump_test.mp4                        # Test input video
+└── README.md                             # This README
 ```
 
-⚙️ システムの動作手順
+## ⚙️ System Workflow
 
-1. データ抽出
+1. Data Extraction
+   - Place videos in data/train/ (separate folders for each person)
+   - Faces are automatically extracted and saved into dataset/train/ and dataset/val/
 
-data/train/ に動画を配置（人物ごとにフォルダを分ける）
+2. Model Training
+   - CNN: Train a face classification model from scratch
+   - FaceNet: Use pre-trained model to generate face embeddings and compare via cosine or Euclidean distance
+   - LBPH: Train using OpenCV's histogram-based face recognition
 
-自動で顔画像を抽出し、dataset/train/ と dataset/val/ に保存
+3. Face Recognition
+   - Run on webcam or existing videos
+   - Output videos with recognition results are saved in output/
 
-2. モデル学習
+## 🧩 Required Libraries
+>                      pip install -r requirements.txt
 
-CNN：顔分類モデルを学習
+## Main Libraries
+   - opencv-python
+   - numpy
+   - tensorflow, keras
+   - scikit-learn
+   - mtcnn or dlib
+   - pickle (for saving label map)
 
-FaceNet：事前学習済みモデルを使用し、embeddingベクトルを生成し、コサイン距離またはユークリッド距離で比較
+## 📌 Notebook Usage
+   - face_recognition_face_net.ipynb: Face recognition using FaceNet model
+   - face_recognition_cnn.ipynb: CNN-based training and testing
+   - face_recognition_LBPH.ipynb: Recognition using OpenCV LBPH
 
-LBPH：OpenCVで顔画像のヒストグラムを用いて学習
+⚠️ Make sure the dataset/ folder and label_map.pkl are prepared in the correct format.
 
-3. 顔認識
-
-ウェブカメラまたは既存動画で実行
-
-認識結果付き動画を output/ に保存
-
-🧩 必要ライブラリ
-
-pip install -r requirements.txt
-
-
-主なライブラリ
-
-opencv-python
-
-numpy
-
-tensorflow, keras
-
-scikit-learn
-
-mtcnn または dlib
-
-pickle（label map保存用）
-
-📌 ノートブック使用方法
-
-face_recognition_face_net.ipynb：FaceNetモデルによる認識
-
-face_recognition_cnn.ipynb：CNNによる学習とテスト
-
-face_recognition_LBPH.ipynb：OpenCV LBPHによる認識
-
-⚠️ dataset/ フォルダと label_map.pkl が正しい形式で準備されていることを確認してください。
-
-📽️ 出力結果
-
-実行後、出力結果は output/ フォルダに保存されます
+## 📽️ Output
+   After execution, output videos are saved in the output/ folder.
